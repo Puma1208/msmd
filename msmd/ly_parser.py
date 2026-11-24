@@ -4,6 +4,7 @@ from __future__ import print_function
 
 import logging
 import string
+from urllib.parse import unquote
 
 import abjad
 
@@ -61,7 +62,7 @@ class LilyPondLinkPitchParser(object):
         for c in mungos:
             if 'ly_link' not in c.data:
                 continue
-            fname, row, col, _ = self.parse_ly_file_link(c.data['ly_link'])
+            fname, row, col, _ = self.parse_ly_file_link(unquote(c.data['ly_link']))
             if fname not in self.ly_data_dict:
                 lines, tokens = self.load_ly_file(fname, with_tokens=True)
                 self.ly_data_dict[fname] = lines

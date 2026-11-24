@@ -46,6 +46,7 @@ import cv2
 import glob
 import pickle
 import yaml
+import shlex
 import sys
 import numpy as np
 
@@ -647,9 +648,9 @@ class MSMDManager(object):
         if suppress_midi:
             cmd_options += ' {0}'.format(cmd_suppress_midi)
 
-        cmd = cmd_base + ' -o {0} '.format(pdf_path_nosuffix) \
+        cmd = cmd_base + ' -o {0} '.format(shlex.quote(pdf_path_nosuffix)) \
               + cmd_options \
-              + ' {0}'.format(self.lily_normalized_file)
+              + ' {0}'.format(shlex.quote(self.lily_normalized_file))
 
         if quiet:
             cmd += ' &> /dev/null'
@@ -713,7 +714,7 @@ class MSMDManager(object):
         lily_normalized_fname = os.path.splitext(self.lily_file)[0] + '.norm.ly'
         self.lily_normalized_file = os.path.join(self.piece.folder,
                                                  lily_normalized_fname)
-        os.system('cp {0} {1}'.format(self.lily_file, self.lily_normalized_file))
+        os.system('cp {0} {1}'.format(shlex.quote(self.lily_file), shlex.quote(self.lily_normalized_file)))
 
         _quiet = ""
         if quiet:
@@ -725,21 +726,21 @@ class MSMDManager(object):
 
         # Update to current LilyPond version
         convert_cmd = "convert-ly -e {0}" \
-                      "".format(self.lily_normalized_file) + _quiet
+                      "".format(shlex.quote(self.lily_normalized_file)) + _quiet
         logging.info('Normalizing LilyPond: updating syntax to latest possible'
                      ' version: {0}'.format(convert_cmd))
         os.system(convert_cmd)
 
         # Translate to default pitch language?
         translate_cmd = 'ly -i "translate english" {0}' \
-                        ''.format(self.lily_normalized_file) + _quiet
+                        ''.format(shlex.quote(self.lily_normalized_file)) + _quiet
         logging.info('Normalizing LilyPond: translating pitch names: {0}'
                      ''.format(translate_cmd))
         os.system(translate_cmd)
 
         # Convert to absolute
         base_cmd = 'ly rel2abs'
-        cmd = base_cmd + ' -i {0}'.format(self.lily_normalized_file) + _quiet
+        cmd = base_cmd + ' -i {0}'.format(shlex.quote(self.lily_normalized_file)) + _quiet
 
         logging.info('Normalizing LilyPond: moving to absolute: {0}'.format(cmd))
         os.system(cmd)
@@ -755,7 +756,7 @@ class MSMDManager(object):
                   ' which should not happen in absolute-encoded music.'
                   ' We probably already had an absolute file. Returning back'
                   ' to original file.')
-            os.system('cp {0} {1}'.format(self.lily_file, self.lily_normalized_file))
+            os.system('cp {0} {1}'.format(shlex.quote(self.lily_file), shlex.quote(self.lily_normalized_file)))
 
         # Remove backup of normalized file
         _ly_norm_backup_file = self.lily_normalized_file + '~'
@@ -780,7 +781,7 @@ class MSMDManager(object):
         #                         self.piece_name +
         #                         self.score_name + '.pdf')
         cmd = "convert -density 150 {0} -quality 90 tmp/page.png" \
-              "".format(pdf_path) + _quiet
+              "".format(shlex.quote(pdf_path)) + _quiet
         os.system(cmd)
 
         if self.gui:
