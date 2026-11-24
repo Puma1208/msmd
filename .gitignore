@@ -12,3 +12,7 @@
 
 /test_data
 DEPRECATED.sheet_manager
+
+.DS_Store
+*.egg-info/
+msmd/tmp/
