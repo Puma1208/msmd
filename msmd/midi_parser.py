@@ -23,6 +23,8 @@ from madmom.audio.filters import LogarithmicFilterbank
 from madmom.audio.spectrogram import FilteredSpectrogramProcessor, LogarithmicSpectrogramProcessor
 from madmom.processors import SequentialProcessor
 
+FPS = 20
+
 
 class MidiParser(object):
     """
@@ -201,7 +203,7 @@ def render_audio(input_midi_path, sound_font,
     audio_fname = new_file_name + "." + audio_fmt
     audio_path = os.path.join(audio_directory, audio_fname)
 
-    perf_midi_fname = new_file_name + "." + midi_extension
+    perf_midi_fname = new_file_name + midi_extension
     perf_midi_path = os.path.join(audio_directory, perf_midi_fname)
 
     # prepare midi
