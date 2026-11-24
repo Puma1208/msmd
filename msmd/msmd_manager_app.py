@@ -83,19 +83,13 @@ form_class = uic.loadUiType("gui/main.ui")[0]
 # PIECES = MOZART_PIECES + BACH_PIECES + HAYDN_PIECES + BEETHOVEN_PIECES + CHOPIN_PIECES + SCHUBERT_PIECES + STRAUSS_PIECES
 # TARGET_DIR = "/home/matthias/mounts/home@rechenknecht1/Data/sheet_localization/real_music_sf"
 
-# Audio augmentation settings:
+# Audio augmentation settings (thesis: one upright piano sound font at the original tempo;
+# the original MSMD values are on the master branch of CPJKU/msmd)
 #  - fixed SF and tempo combinations for no-aug. training and evaluation,
-fixed_combinations = [(1.0, "ElectricPiano"),
-                      (0.5, "grand-piano-YDP-20160804"),
-                      (0.75, "grand-piano-YDP-20160804"),
-                      (1.0, "grand-piano-YDP-20160804"),
-                      (1.25, "grand-piano-YDP-20160804"),
-                      (1.5, "grand-piano-YDP-20160804"),
-                      (1.75, "grand-piano-YDP-20160804"),
-                      (2.0, "grand-piano-YDP-20160804")]
+fixed_combinations = [(1.0, "UprightPianoKW-small-bright-20190703")]
 #  - random soundfont and tempo selection for training data augmentation
-tempo_ratios = [0.9, 0.95, 1.0, 1.05, 1.1]
-sound_fonts = ["acoustic_piano_imis_1", "ElectricPiano", "YamahaGrandPiano"]
+tempo_ratios = [1.0]
+sound_fonts = ["UprightPianoKW-small-bright-20190703"]
 
 
 class MSMDManagerError(Exception):
@@ -425,6 +419,8 @@ class MSMDManager(object):
         all_mungos = []
         all_events = self.note_events
         for page, mungos in enumerate(self.page_mungos):
+            # Thesis workaround: ignore the last notehead of each page in the alignment stats
+            mungos.remove(mungos[mungos.__len__()-1])
             all_mungos.extend(mungos)
             events = self.page_note_events(page)
 
@@ -437,8 +433,8 @@ class MSMDManager(object):
                                       self.score_performance_alignment)
 
         # print('Collected piece stats: ', piece_stats)
-        # print('All mungos: {0}, all events: {1}, aln: {2}'
-        #       ''.format(len(all_mungos), len(all_events), len(self.score_performance_alignment)))
+        logging.info('All mungos: {0}, all events: {1}, aln: {2}'
+                     ''.format(len(all_mungos), len(all_events), len(self.score_performance_alignment)))
 
         return page_stats, piece_stats
 

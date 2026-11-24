@@ -9,3 +9,6 @@ Contributors
 * Stefan Balke <https://github.com/stefan-balke>
 * Florian Henkel <https://github.com/fhenkel>
 * Luis Carvalho <https://github.com/luisfvc>
+
+In the scope of the master thesis "Enhance Musical Practice through Musical Audio-score Alignment":
+* Margarita Naryzhnyaya

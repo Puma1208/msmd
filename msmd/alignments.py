@@ -1144,14 +1144,13 @@ def alignment_stats(mungos, events, aln):
             else:
                 mungos_not_aligned_not_tied.append(m)
 
-            if 'midi_pitch_code' not in m.data:
-                mungos_not_aligned_no_pitch.append(m)
-
+            # Thesis: do not count unaligned noteheads without a pitch
             continue
 
         m_pitch = None
         if 'midi_pitch_code' not in m.data:
-            mungos_aligned_no_pitch.append(m)
+            # Thesis: skip aligned noteheads without a pitch
+            continue
         else:
             m_pitch = m.data['midi_pitch_code']
 
@@ -1231,8 +1230,9 @@ def detect_system_regions_ly(image, verbose=False):
     import cv2
     from skimage.measure import label, regionprops
 
-    _binarization_threshold = image.max() * 0.85
-    _kernel_width_coefficient = 0.6
+    # Thesis: tuned for the thesis pieces (MSMD default: .85 and .6)
+    _binarization_threshold = image.max() * 0.95
+    _kernel_width_coefficient = 0.1
 
     logging.debug('detect_system_regions_ly(): image max: {0}'.format(image.max()))
 
