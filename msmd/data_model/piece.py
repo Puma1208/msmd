@@ -165,7 +165,7 @@ class Piece(MSMDMetadataMixin):
 
     @property
     def n_pages(self):
-        score = self.load_score(self.scores.keys()[0])
+        score = self.load_score(list(self.scores.keys())[0])
         return score.n_pages
 
     def _ensure_piece_structure(self):

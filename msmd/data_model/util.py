@@ -27,7 +27,7 @@ class MSMDMetadataMixin(object):
             return dict()
 
         with open(metafile, 'r') as hdl:
-            metadata = yaml.load(hdl)
+            metadata = yaml.load(hdl, yaml.Loader)
 
         return metadata
 

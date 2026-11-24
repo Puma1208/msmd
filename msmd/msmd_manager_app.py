@@ -617,7 +617,7 @@ class MSMDManager(object):
 
     # -wx GUI
     def ly2pdf_and_midi(self, quiet=False):
-        """Convert the LilyPond file to PDF and MIDI (which is done automatically, if the Ly
+        r"""Convert the LilyPond file to PDF and MIDI (which is done automatically, if the Ly
         file contains the \midi { } directive)."""
         self.normalize_ly()
 
@@ -2315,8 +2315,8 @@ def run_batch_mode(args):
     success_pieces = []
     failed_pieces = []
 
-    _start_time = time.clock()
-    _last_time = time.clock()
+    _start_time = time.perf_counter()
+    _last_time = time.perf_counter()
     for i, (piece, piece_dir) in enumerate(zip(pieces, piece_dirs)):
         print('\n\n---------------------------------------------------'
               '\n[{0}/{1}]\tProcessing piece: {2}\n'
@@ -2385,7 +2385,7 @@ def run_batch_mode(args):
             mgr.piece.metadata['aligned_well'] = False
             mgr.piece.dump_metadata()
 
-        _now = time.clock()
+        _now = time.perf_counter()
         print('... {0:.2f} s (Total time expired: {1:.2f} s)'
               ''.format(_now - _last_time, _now - _start_time))
         _last_time = _now

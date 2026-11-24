@@ -157,7 +157,7 @@ def build_argument_parser():
 
 def main(args):
     logging.info('Starting main...')
-    _start_time = time.clock()
+    _start_time = time.perf_counter()
 
     if args.input_file is not None:
         output_lines = process_file(args.input_file)
@@ -190,7 +190,7 @@ def main(args):
                                  ''.format(name))
                     continue
 
-            _piece_start_time = time.clock()
+            _piece_start_time = time.perf_counter()
 
             processed_lines = process_file(piece)
 
@@ -202,7 +202,7 @@ def main(args):
 
             n_processed += 1
 
-            _now = time.clock()
+            _now = time.perf_counter()
             print('({0}) piece: {1}\tTime: {2:.2f} s\tTotal: {3:.2f} s'
                   ''.format(n_processed, name,
                             _now - _piece_start_time,
@@ -212,7 +212,7 @@ def main(args):
                 if n_processed >= args.first_k:
                     break
 
-    _end_time = time.clock()
+    _end_time = time.perf_counter()
     logging.info('process_mutopia.py done in {0:.3f} s'
                  ''.format(_end_time - _start_time))
 
