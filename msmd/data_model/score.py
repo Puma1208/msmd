@@ -298,11 +298,11 @@ class Score(MSMDMetadataMixin):
                 for c in system_notes:
                     if 'midi_pitch_code' not in c.data:
                         print('Notehead without pitch: {0}'
-                              ''.format(str(c)))
+                              ''.format(str(c.objid)))
                         continue
                     if c.data['midi_pitch_code'] is None:
                         print('Notehead with pitch=None: {0}'
-                              ''.format(str(c)))
+                              ''.format(str(c.objid)))
 
                 system_notes = [c for c in system_notes
                                 if 'midi_pitch_code' in c.data]

@@ -79,15 +79,16 @@ class LilyPondLinkPitchParser(object):
             token = self.ly_token_from_location(row, col,
                                                 ly_data=self.ly_data_dict[fname])
 
-            try:
-                midi_pitch_code = self.ly_token_to_midi_pitch(token)
-            except MSMDLyParsingError as e:
-                raise MSMDLyParsingError('Token {0} at location {1}'
-                                                 ' could not be parsed. Line:'
-                                                 ' {2}'
-                                                 ''.format(token, (row, col),
-                                                           self.ly_data_dict[fname][row]))
-            output[c.objid] = midi_pitch_code
+            if LilyPondLinkPitchParser.ly_token_is_note(token):
+                try:
+                    midi_pitch_code = self.ly_token_to_midi_pitch(token)
+                    output[c.objid] = midi_pitch_code
+                except MSMDLyParsingError as e:
+                    raise MSMDLyParsingError('Token {0} at location {1}'
+                                                    ' could not be parsed. Line:'
+                                                    ' {2}'
+                                                    ''.format(token, (row, col),
+                                                            self.ly_data_dict[fname][row]))
 
         logging.info('TOTAL TIED NOTES: {0}'.format(_n_ties))
 
