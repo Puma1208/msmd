@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.1-thesis (fork)
+
+* Fix remaining Python 3 issues and support NumPy 2
+* Handle file paths that contain spaces
+* Fix the double dot in rendered MIDI file names
+* Thesis settings: system detection thresholds, one upright piano sound font at tempo 1.0
+
 ## v1.1
 
 * All note events are set to a velocity of `64` by default

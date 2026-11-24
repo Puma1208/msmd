@@ -1,3 +1,13 @@
+This project was forked from the open source project [CPJKU/msmd](https://github.com/CPJKU/msmd) for my MSc thesis, [thesis-audio-sheet-retrieval](https://github.com/Puma1208/thesis-audio-sheet-retrieval) (Maastricht University, 2024). The `thesis` branch has a few changes:
+
+- fixes so the package runs on Python 3.12 and NumPy 2
+- file paths with spaces work
+- it includes the settings I used to build the thesis dataset (system detection thresholds, sound font, tempo)
+
+Install: `pip install "git+https://github.com/Puma1208/msmd.git@thesis"`.
+The other dependencies are listed in the thesis repo's `requirements.txt`.
+
+All credit for MSMD goes to the original authors. The license (CC BY-NC-SA 4.0) is unchanged.
 
 Multimodal Sheet Music Dataset
 ==============================
